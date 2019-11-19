@@ -54,3 +54,48 @@ Node * add_node_rec(Node * node, int value) {
 void add_node(Tree * tree, int value) {
     tree->root = add_node_rec(tree->root, value);
 }
+
+Node * remove_bigger(Node * node, int * bigger) {
+    if(node != NULL) {
+        if(node->right != NULL)
+            node->right = remove_bigger(node->right, bigger);
+        else {
+            Node * help = node;
+            bigger = node->value;
+            node = node->left;
+            free(help);
+        }
+    }
+    return node;
+}
+
+Node * remove_node_rec(Node * node, int * value) {
+    if(node != NULL) {
+        if(value < node->value)        
+            node->left = remove_node_rec(node->left, value);
+        else 
+            if(value > node->value)
+                node->right = remove_node_rec(node->right, value);
+            else {
+                Node * help = node;
+                if(node->left == NULL && node->right == NULL) {
+                    node = NULL;
+                    free(help);
+                } else {
+                    if(node->left == NULL || node->right == NULL) {
+                        node = node->left != NULL ? node->left : node->right;
+                        free(help);
+                    } else {
+                        int * bigger;
+                        node->left = remove_bigger(node->left, bigger);
+                        node->value = bigger;                        
+                    }
+                }                
+            }
+    }
+    return node;
+}
+
+void remove_node(Tree * tree, int * value) {
+    tree->root = remove_node_rec(tree->root, value);
+}
