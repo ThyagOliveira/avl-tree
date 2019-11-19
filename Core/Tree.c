@@ -99,3 +99,36 @@ Node * remove_node_rec(Node * node, int * value) {
 void remove_node(Tree * tree, int * value) {
     tree->root = remove_node_rec(tree->root, value);
 }
+
+void pre_order(Node * node) {
+    if(node != NULL) {
+        printf("%d ", node->value);
+        pre_order(node->left);
+        pre_order(node->right);
+    }
+}
+
+void in_order(Node * node) {
+    if(node != NULL) {
+        in_order(node->left);
+        printf("%d ", node->value);
+        in_order(node->right);
+    }
+}
+
+void post_order(Node * node) {
+    if(node != NULL) {
+        post_order(node->left);
+        post_order(node->right);
+        printf("%d ", node->value);
+    }
+}
+
+void print_tree(Tree * tree) {
+    if(tree->root == NULL)
+        printf("\t Primeiro carregue a árvore");
+    else {
+        in_order(tree->root);
+        printf("\n");
+    }               
+}
