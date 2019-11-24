@@ -11,6 +11,7 @@ struct tree {
 
 struct node {
     int value;
+    int height;
     Node * left;
     Node * right;
 };
@@ -45,6 +46,13 @@ int height_rec(Node * node) {
 
 int height(Tree * tree) {
     return height_rec(tree->root);
+}
+
+int find_height(Node * node) {
+    if(node != NULL) {
+        return node->height;
+    }
+    return 0;
 }
 
 Node * left_rotation(Node * node) {
