@@ -34,6 +34,34 @@ void destroy_tree(Tree * tree) {
     free(tree);
 }
 
+Node * left_rotation(Node * node) {
+    Node * help = node->right;
+
+    node->right = help->left;
+    help->left = node;
+
+    return help;
+}
+
+Node * right_rotation(Node * node) {
+    Node * help = node->left;
+
+    node->left = help->right;
+    help->right = node;
+
+    return help;
+}
+
+Node * left_double_rotation(Node * node) {
+    node->right = right_rotation(node->right);
+    return left_rotation(node);
+}
+
+Node * right_double_rotation(Node * node) {
+    node->left = left_rotation(node->left);
+    return right_rotation(node);
+}
+
 Node * add_node_rec(Node * node, int value) {
     if(node != NULL) {
         if(value < node->value)
@@ -98,34 +126,6 @@ Node * remove_node_rec(Node * node, int * value) {
 
 void remove_node(Tree * tree, int * value) {
     tree->root = remove_node_rec(tree->root, value);
-}
-
-Node * left_rotation(Node * node) {
-    Node * help = node->right;
-
-    node->right = help->left;
-    help->left = node;
-
-    return help;
-}
-
-Node * right_rotation(Node * node) {
-    Node * help = node->left;
-
-    node->left = help->right;
-    help->right = node;
-
-    return help;
-}
-
-Node * left_double_rotation(Node * node) {
-    node->right = right_rotation(node->right);
-    return left_rotation(node);
-}
-
-Node * right_double_rotation(Node * node) {
-    node->left = left_rotation(node->left);
-    return right_rotation(node);
 }
 
 void pre_order(Node * node) {
