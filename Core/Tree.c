@@ -11,6 +11,7 @@ struct tree {
 
 struct node {
     int value;
+    int height;
     Node * left;
     Node * right;
 };
@@ -32,6 +33,54 @@ void destroy_tree_rec(Node * node) {
 void destroy_tree(Tree * tree) {
     destroy_tree_rec(tree->root);
     free(tree);
+}
+
+int height_rec(Node * node) {
+    if(node != NULL) {
+        int height_left = height_rec(node->left);
+        int height_right = height_rec(node->right);
+        return(height_left > height_right ? height_left : height_right) + 1;
+    }
+    return 0;
+}
+
+int height(Tree * tree) {
+    return height_rec(tree->root);
+}
+
+int find_height(Node * node) {
+    if(node != NULL) {
+        return node->height;
+    }
+    return 0;
+}
+
+Node * left_rotation(Node * node) {
+    Node * help = node->right;
+
+    node->right = help->left;
+    help->left = node;
+
+    return help;
+}
+
+Node * right_rotation(Node * node) {
+    Node * help = node->left;
+
+    node->left = help->right;
+    help->right = node;
+
+    return help;
+}
+
+Node * left_double_rotation(Node * node) {
+    node->right = right_rotation(node->right);
+    return left_rotation(node);
+}
+
+Node * right_double_rotation(Node * node) {
+    node->left = left_rotation(node->left);
+    return right_rotation(node);
 }
 
 Node * add_node_rec(Node * node, int value) {
@@ -98,34 +147,6 @@ Node * remove_node_rec(Node * node, int * value) {
 
 void remove_node(Tree * tree, int * value) {
     tree->root = remove_node_rec(tree->root, value);
-}
-
-Node * left_rotation(Node * node) {
-    Node * help = node->right;
-
-    node->right = help->left;
-    help->left = node;
-
-    return help;
-}
-
-Node * right_rotation(Node * node) {
-    Node * help = node->left;
-
-    node->left = help->right;
-    help->right = node;
-
-    return help;
-}
-
-Node * left_double_rotation(Node * node) {
-    node->right = right_rotation(node->right);
-    return left_rotation(node);
-}
-
-Node * right_double_rotation(Node * node) {
-    node->left = left_rotation(node->left);
-    return right_rotation(node);
 }
 
 void pre_order(Node * node) {
