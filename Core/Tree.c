@@ -34,6 +34,19 @@ void destroy_tree(Tree * tree) {
     free(tree);
 }
 
+int height_rec(Node * node) {
+    if(node != NULL) {
+        int height_left = height_rec(node->left);
+        int height_right = height_rec(node->right);
+        return(height_left > height_right ? height_left : height_right) + 1;
+    }
+    return 0;
+}
+
+int height(Tree * tree) {
+    return height_rec(tree->root);
+}
+
 Node * left_rotation(Node * node) {
     Node * help = node->right;
 
