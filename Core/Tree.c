@@ -208,8 +208,7 @@ void print_tree(Tree * tree) {
 void save_file_in_order_recursive(Node * node, FILE * file) {
     if(node != NULL) {
         save_file_in_order_recursive(node->left, file);
-        fprintf(file, "%d ", node->value);
-        fprintf(file, "\n");
+        fprintf(file, "%d \n", node->value);
         save_file_in_order_recursive(node->right, file);
     }
 }
