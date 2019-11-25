@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 typedef struct tree Tree;
 
 Tree * create();
