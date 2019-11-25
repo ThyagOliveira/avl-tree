@@ -204,3 +204,15 @@ void print_tree(Tree * tree) {
         printf("\n");
     }               
 }
+
+void save_file_in_order_recursive(Node * node, FILE * file) {
+    if(node != NULL) {
+        save_file_in_order_recursive(node->left, file);
+        fprintf(file, "%d \n", node->value);
+        save_file_in_order_recursive(node->right, file);
+    }
+}
+
+void save_file_in_order(Tree * tree, FILE * file) {
+    save_file_in_order_recursive(tree->root, file);
+}

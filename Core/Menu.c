@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include "../Headers/Tree.h"
 
+void save_file(Tree * tree) {
+	FILE * file = fopen("file.txt", "w");
+	save_file_in_order(tree, file);
+	fclose(file);
+	printf("Arquivo salvo com sucesso\n");
+}
+
 void menu(Tree * tree) {
     int option = 0;
     do {
@@ -24,6 +31,7 @@ void menu(Tree * tree) {
             case 3:
                 break;
             case 4:
+                save_file(tree);
                 break;
             case 5:
                 break;
