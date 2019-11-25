@@ -84,12 +84,35 @@ Node * right_double_rotation(Node * node) {
 }
 
 Node * add_node_recursive(Node * node, int value) {
+    Node * help;
     if(node != NULL) {
-        if(value < node->value)
-            node->left = add_node_recursive(node->left, value);            
+        if(value < node->value) {
+            node->left = add_node_recursive(node->left, value);     
+            int balancing_factor = height_recursive(node->right) - height_recursive(node->left);
+
+            if(balancing_factor == -2) {
+                balancing_factor = height_recursive(node->left->right) - height_recursive(node->left->left);
+
+                if(balancing_factor <= 0)
+                    help = right_rotation(node);
+                else
+                    help = right_double_rotation(node);
+            }
+        }                   
         else
-            if(value > node->value)
+            if(value > node->value) {
                 node->right = add_node_recursive(node->right, value);
+                int balancing_factor = height_recursive(node->right) - height_recursive(node->left);
+
+                if(balancing_factor == 2) {
+                    balancing_factor = height_recursive(node->right->right) - height_recursive(node->right->left);
+
+                    if(balancing_factor >= 0)
+                        help = left_rotation(node);
+                    else
+                        help = left_double_rotation(node);
+                }
+            }                
     } else {
         node = malloc(sizeof(Node));
         node->value = value;
