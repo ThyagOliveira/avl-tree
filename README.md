@@ -1,6 +1,7 @@
 # avl-tree
 
 ![CI status](https://github.com/ThyagOliveira/avl-tree/workflows/CI/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 
 ## Objetivo
