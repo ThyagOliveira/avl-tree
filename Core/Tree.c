@@ -22,30 +22,30 @@ Tree * create() {
     return tree;
 }
 
-void destroy_tree_rec(Node * node) {
+void destroy_tree_recursive(Node * node) {
     if(node != NULL) {
-        destroy_tree_rec(node->left);
-        destroy_tree_rec(node->right);
+        destroy_tree_recursive(node->left);
+        destroy_tree_recursive(node->right);
         free(node);
     }
 }
 
 void destroy_tree(Tree * tree) {
-    destroy_tree_rec(tree->root);
+    destroy_tree_recursive(tree->root);
     free(tree);
 }
 
-int height_rec(Node * node) {
+int height_recursive(Node * node) {
     if(node != NULL) {
-        int height_left = height_rec(node->left);
-        int height_right = height_rec(node->right);
+        int height_left = height_recursive(node->left);
+        int height_right = height_recursive(node->right);
         return(height_left > height_right ? height_left : height_right) + 1;
     }
     return 0;
 }
 
 int height(Tree * tree) {
-    return height_rec(tree->root);
+    return height_recursive(tree->root);
 }
 
 int find_height(Node * node) {
@@ -83,13 +83,13 @@ Node * right_double_rotation(Node * node) {
     return right_rotation(node);
 }
 
-Node * add_node_rec(Node * node, int value) {
+Node * add_node_recursive(Node * node, int value) {
     if(node != NULL) {
         if(value < node->value)
-            node->left = add_node_rec(node->left, value);
+            node->left = add_node_recursive(node->left, value);            
         else
             if(value > node->value)
-                node->right = add_node_rec(node->right, value);
+                node->right = add_node_recursive(node->right, value);
     } else {
         node = malloc(sizeof(Node));
         node->value = value;
@@ -101,7 +101,7 @@ Node * add_node_rec(Node * node, int value) {
 }
 
 void add_node(Tree * tree, int value) {
-    tree->root = add_node_rec(tree->root, value);
+    tree->root = add_node_recursive(tree->root, value);
 }
 
 Node * remove_bigger(Node * node, int * bigger) {
@@ -118,13 +118,13 @@ Node * remove_bigger(Node * node, int * bigger) {
     return node;
 }
 
-Node * remove_node_rec(Node * node, int * value) {
+Node * remove_node_recursive(Node * node, int * value) {
     if(node != NULL) {
         if(value < node->value)        
-            node->left = remove_node_rec(node->left, value);
+            node->left = remove_node_recursive(node->left, value);
         else 
             if(value > node->value)
-                node->right = remove_node_rec(node->right, value);
+                node->right = remove_node_recursive(node->right, value);
             else {
                 Node * help = node;
                 if(node->left == NULL && node->right == NULL) {
@@ -146,29 +146,29 @@ Node * remove_node_rec(Node * node, int * value) {
 }
 
 void remove_node(Tree * tree, int * value) {
-    tree->root = remove_node_rec(tree->root, value);
+    tree->root = remove_node_recursive(tree->root, value);
 }
 
-void pre_order(Node * node) {
+void pre_order_recursive(Node * node) {
     if(node != NULL) {
         printf("%d ", node->value);
-        pre_order(node->left);
-        pre_order(node->right);
+        pre_order_recursive(node->left);
+        pre_order_recursive(node->right);
     }
 }
 
-void in_order(Node * node) {
+void in_order_recursive(Node * node) {
     if(node != NULL) {
-        in_order(node->left);
+        in_order_recursive(node->left);
         printf("%d ", node->value);
-        in_order(node->right);
+        in_order_recursive(node->right);
     }
 }
 
-void post_order(Node * node) {
+void post_order_recursive(Node * node) {
     if(node != NULL) {
-        post_order(node->left);
-        post_order(node->right);
+        post_order_recursive(node->left);
+        post_order_recursive(node->right);
         printf("%d ", node->value);
     }
 }
@@ -177,7 +177,7 @@ void print_tree(Tree * tree) {
     if(tree->root == NULL)
         printf("\t Primeiro carregue a árvore");
     else {
-        in_order(tree->root);
+        in_order_recursive(tree->root);
         printf("\n");
     }               
 }
