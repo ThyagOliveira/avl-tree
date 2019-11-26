@@ -9,6 +9,15 @@ void save_file(Tree * tree) {
 	printf("Arquivo salvo com sucesso\n");
 }
 
+void count_node_tree(Tree * tree) {
+    int count = count_node(tree);
+    
+    if(count != 0) {
+        printf("Quantidade de nós na árvore: %d", count);
+    } else
+        printf("Árvore vazia");
+}
+
 void menu(Tree * tree) {
     int option = 0;
     do {
@@ -29,11 +38,13 @@ void menu(Tree * tree) {
             case 2:
                 break;
             case 3:
+                count_node_tree(tree);
                 break;
             case 4:
                 save_file(tree);
                 break;
             case 5:
+                destroy_tree(tree);
                 break;
             default:
                 system("clear");

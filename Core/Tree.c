@@ -55,6 +55,17 @@ int find_height(Node * node) {
     return 0;
 }
 
+int count_node_recursive(Node * node) {
+    if(node != NULL) {
+        return count_node_recursive(node->left) + count_node_recursive(node->right) + 1;
+    }
+    return 0;
+}
+
+int count_node(Tree * tree) {
+    return count_node_recursive(tree->root);
+}
+
 Node * left_rotation(Node * node) {
     Node * help = node->right;
 
@@ -203,6 +214,22 @@ void print_tree(Tree * tree) {
         in_order_recursive(tree->root);
         printf("\n");
     }               
+}
+
+void load_file(Tree * tree) {
+    FILE * file = fopen("file.txt", "r");
+    char string[100];
+    int value;
+
+    destroy_tree_recursive(tree->root);
+	tree->root = NULL;
+    
+    if(file != NULL) {
+        while((fgets(string, sizeof string - 1, file)) != NULL) {
+            sscanf(string, "%[^\n]", value);
+			add_node(tree, value);            
+        }
+    }
 }
 
 void save_file_in_order_recursive(Node * node, FILE * file) {
