@@ -12,3 +12,4 @@ void load_file(Tree * tree);
 void save_file_in_order(Tree * tree, FILE * file);
 
 int height(Tree * tree);
+int count_node(Tree * tree);
