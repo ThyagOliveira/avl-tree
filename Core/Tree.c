@@ -221,7 +221,7 @@ void load_file(Tree * tree) {
     char string[100];
     int value;
 
-    destroy_tree_rec(tree->root);
+    destroy_tree_recursive(tree->root);
 	tree->root = NULL;
     
     if(file != NULL) {
