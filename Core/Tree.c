@@ -205,6 +205,22 @@ void print_tree(Tree * tree) {
     }               
 }
 
+void load_file(Tree * tree) {
+    FILE * file = fopen("file.txt", "r");
+    char string[100];
+    int value;
+
+    destroy_tree_rec(tree->root);
+	tree->root = NULL;
+    
+    if(file != NULL) {
+        while((fgets(string, sizeof string - 1, file)) != NULL) {
+            sscanf(string, "%[^\n]", value);
+			add_node(tree, value);            
+        }
+    }
+}
+
 void save_file_in_order_recursive(Node * node, FILE * file) {
     if(node != NULL) {
         save_file_in_order_recursive(node->left, file);
