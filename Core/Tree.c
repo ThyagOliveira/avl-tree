@@ -55,6 +55,17 @@ int find_height(Node * node) {
     return 0;
 }
 
+int count_node_recursive(Node * node) {
+    if(node != NULL) {
+        return count_node_recursive(node->left) + count_node_recursive(node->right) + 1;
+    }
+    return 0;
+}
+
+int count_node(Tree * tree) {
+    return count_node_recursive(tree->root);
+}
+
 Node * left_rotation(Node * node) {
     Node * help = node->right;
 
