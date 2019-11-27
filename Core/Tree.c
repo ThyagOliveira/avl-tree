@@ -138,7 +138,7 @@ void add_node(Tree * tree, int value) {
     tree->root = add_node_recursive(tree->root, value);
 }
 
-Node * remove_bigger(Node * node, int * bigger) {
+Node * remove_bigger(Node * node, int bigger) {
     if(node != NULL) {
         if(node->right != NULL)
             node->right = remove_bigger(node->right, bigger);
@@ -152,7 +152,7 @@ Node * remove_bigger(Node * node, int * bigger) {
     return node;
 }
 
-Node * remove_node_recursive(Node * node, int * value) {
+Node * remove_node_recursive(Node * node, int value) {
     if(node != NULL) {
         if(value < node->value)        
             node->left = remove_node_recursive(node->left, value);
@@ -169,7 +169,7 @@ Node * remove_node_recursive(Node * node, int * value) {
                         node = node->left != NULL ? node->left : node->right;
                         free(help);
                     } else {
-                        int * bigger;
+                        int bigger;
                         node->left = remove_bigger(node->left, bigger);
                         node->value = bigger;                        
                     }
@@ -179,7 +179,7 @@ Node * remove_node_recursive(Node * node, int * value) {
     return node;
 }
 
-void remove_node(Tree * tree, int * value) {
+void remove_node(Tree * tree, int value) {
     tree->root = remove_node_recursive(tree->root, value);
 }
 
