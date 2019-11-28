@@ -2,22 +2,6 @@
 #include <stdlib.h>
 #include "../Headers/Tree.h"
 
-void save_file(Tree * tree) {
-	FILE * file = fopen("file.txt", "w");
-	save_file_in_order(tree, file);
-	fclose(file);
-	printf("Arquivo salvo com sucesso\n");
-}
-
-void count_node_tree(Tree * tree) {
-    int count = count_node(tree);
-    
-    if(count != 0) {
-        printf("Quantidade de nós na árvore: %d", count);
-    } else
-        printf("Árvore vazia");
-}
-
 void menu(Tree * tree) {
     int option = 0;
     do {
@@ -52,4 +36,20 @@ void menu(Tree * tree) {
                 break;
         }        
     } while(option != 5);
+}
+
+void save_file(Tree * tree) {
+	FILE * file = fopen("file.txt", "w");
+	save_file_in_order(tree, file);
+	fclose(file);
+	printf("Arquivo salvo com sucesso\n");
+}
+
+void count_node_tree(Tree * tree) {
+    int count = count_node(tree);
+    
+    if(count != 0) {
+        printf("Quantidade de nós na árvore: %d", count);
+    } else
+        printf("Árvore vazia");
 }
