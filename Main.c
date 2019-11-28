@@ -5,5 +5,6 @@ int main(int argc, char const *argv[]) {
     Tree * tree = create();
     menu(tree);
     
+    destroy_tree(tree);
     return 0;
 }
