@@ -1,22 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../Headers/Tree.h"
-
-void save_file(Tree * tree) {
-	FILE * file = fopen("file.txt", "w");
-	save_file_in_order(tree, file);
-	fclose(file);
-	printf("Arquivo salvo com sucesso\n");
-}
-
-void count_node_tree(Tree * tree) {
-    int count = count_node(tree);
-    
-    if(count != 0) {
-        printf("Quantidade de nós na árvore: %d", count);
-    } else
-        printf("Árvore vazia");
-}
+#include "../Headers/Menu.h"
 
 void menu(Tree * tree) {
     int option = 0;
@@ -34,8 +19,12 @@ void menu(Tree * tree) {
 
         switch(option) {
             case 1:
+                add_value_range(tree);
+                print_tree(tree);
                 break;
             case 2:
+                remove_value_range(tree);
+                print_tree(tree);
                 break;
             case 3:
                 count_node_tree(tree);
@@ -44,7 +33,6 @@ void menu(Tree * tree) {
                 save_file(tree);
                 break;
             case 5:
-                destroy_tree(tree);
                 break;
             default:
                 system("clear");
@@ -52,4 +40,53 @@ void menu(Tree * tree) {
                 break;
         }        
     } while(option != 5);
+}
+
+void add_value_range(Tree * tree) {
+    int start, end;
+
+    printf("Digite o valor inicial: ");
+    scanf("%d", &start);
+    fflush(stdin);
+
+    printf("Digite o valor final: ");
+    scanf("%d", &end);
+    fflush(stdin);    
+
+    for( ; start <= end; start++) {        
+        add_node(tree, start);
+    }
+
+}
+
+void remove_value_range(Tree * tree) {
+    int start, end;
+
+    printf("Digite o valor inicial: ");
+    scanf("%d", &start);
+    fflush(stdin);
+
+    printf("Digite o valor final: ");
+    scanf("%d", &end);
+    fflush(stdin);    
+
+    for( ; start <= end; start++) {        
+        remove_node(tree, start);
+    }
+}
+
+void save_file(Tree * tree) {
+	FILE * file = fopen("file.txt", "w");
+	save_file_in_order(tree, file);
+	fclose(file);
+	printf("Arquivo salvo com sucesso\n");
+}
+
+void count_node_tree(Tree * tree) {
+    int count = count_node(tree);
+    
+    if(count != 0) {
+        printf("Quantidade de nós na árvore: %d", count);
+    } else
+        printf("Árvore vazia");
 }
