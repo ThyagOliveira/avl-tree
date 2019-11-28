@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../Headers/Tree.h"
+#include "../Headers/Menu.h"
 
 void menu(Tree * tree) {
     int option = 0;
