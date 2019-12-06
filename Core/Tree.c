@@ -11,6 +11,7 @@ struct tree {
 
 struct node {
     int value;
+    int balancing_factor;
     int height;
     Node * left;
     Node * right;
@@ -66,6 +67,13 @@ int count_node(Tree * tree) {
     return count_node_recursive(tree->root);
 }
 
+int allocated_memory(Tree * tree, int value) {    
+    if(tree != NULL) {
+        return value * sizeof(tree->root);
+    }
+    return 0;
+}
+
 Node * left_rotation(Node * node) {
     Node * help = node->right;
 
@@ -94,43 +102,41 @@ Node * right_double_rotation(Node * node) {
     return right_rotation(node);
 }
 
-Node * add_node_recursive(Node * node, int value) {
-    Node * help;
+Node * add_node_recursive(Node * node, int value) {    
     if(node != NULL) {
         if(value < node->value) {
-            node->left = add_node_recursive(node->left, value);     
-            int balancing_factor = height_recursive(node->right) - height_recursive(node->left);
+            node->left = add_node_recursive(node->left, value);
+            int balance_factor = height_recursive(node->right) - height_recursive(node->left);
 
-            if(balancing_factor == -2) {
-                balancing_factor = height_recursive(node->left->right) - height_recursive(node->left->left);
-
-                if(balancing_factor <= 0)
-                    help = right_rotation(node);
+            if(balance_factor == -2) {
+                balance_factor = height_recursive(node->left->right) - height_recursive(node->left->left);
+                if(balance_factor <= 0)
+                    node = right_rotation(node);
                 else
-                    help = right_double_rotation(node);
+                    node = right_double_rotation(node);
             }
         }                   
         else
             if(value > node->value) {
                 node->right = add_node_recursive(node->right, value);
-                int balancing_factor = height_recursive(node->right) - height_recursive(node->left);
+                int balance_factor = height_recursive(node->right) - height_recursive(node->left);
 
-                if(balancing_factor == 2) {
-                    balancing_factor = height_recursive(node->right->right) - height_recursive(node->right->left);
-
-                    if(balancing_factor >= 0)
-                        help = left_rotation(node);
+                if(balance_factor == 2) {
+                    balance_factor = height_recursive(node->right->right) - height_recursive(node->right->left);
+                    if(balance_factor >= 0)
+                        node = left_rotation(node);
                     else
-                        help = left_double_rotation(node);
-                }
+                        node = left_double_rotation(node);
+                }                
             }                
     } else {
         node = malloc(sizeof(Node));
-        node->value = value;
+        node->value = value;        
+        node->balancing_factor = 0;
         node->left = NULL;
         node->right = NULL;
     }
-
+    
     return node;
 }
 
@@ -152,13 +158,33 @@ Node * remove_bigger(Node * node, int bigger) {
     return node;
 }
 
-Node * remove_node_recursive(Node * node, int value) {
+Node * remove_node_recursive(Node * node, int value) {    
     if(node != NULL) {
-        if(value < node->value)        
+        if(value < node->value) {        
             node->left = remove_node_recursive(node->left, value);
+            int balance_factor = height_recursive(node->right) - height_recursive(node->left);
+
+            if(balance_factor == 2) {
+                balance_factor = height_recursive(node->right->right) - height_recursive(node->right->left);
+                if(balance_factor >= 0)
+                    node = left_rotation(node);
+                else
+                    node = left_double_rotation(node);
+            }            
+        }
         else 
-            if(value > node->value)
+            if(value > node->value) {
                 node->right = remove_node_recursive(node->right, value);
+                int balance_factor = height_recursive(node->right) - height_recursive(node->left);
+
+                if(balance_factor == -2) {
+                    balance_factor = height_recursive(node->left->right) - height_recursive(node->left->left);
+                    if(balance_factor <= 0)
+                        node = right_rotation(node);
+                    else
+                        node = right_double_rotation(node);
+                }                
+            }
             else {
                 Node * help = node;
                 if(node->left == NULL && node->right == NULL) {
