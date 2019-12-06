@@ -11,7 +11,8 @@ void menu(Tree * tree) {
         printf("\n02. Remover uma faixa de inteiros.");
         printf("\n03. Retornar a quantidade de nós na árvore e a quantidade de memória alocada pelos nós.");
         printf("\n04. Salvar o conteúdo da árvore em ordem crescente.");
-        printf("\n05. Sair");
+        printf("\n05. Imprimir árvore.");
+        printf("\n06. Sair");
         printf("\nEscolha a opção(Apenas Números): ");
 
         scanf("%d", &option);    
@@ -19,12 +20,10 @@ void menu(Tree * tree) {
 
         switch(option) {
             case 1:
-                add_value_range(tree);
-                print_tree(tree);
+                add_value_range(tree);                
                 break;
             case 2:
-                remove_value_range(tree);
-                print_tree(tree);
+                remove_value_range(tree);                
                 break;
             case 3:
                 count_node_tree(tree);
@@ -33,13 +32,16 @@ void menu(Tree * tree) {
                 save_file(tree);
                 break;
             case 5:
+                print_tree(tree);
+                break;
+            case 6:
                 break;
             default:
                 system("clear");
                 return menu(tree);
                 break;
         }        
-    } while(option != 5);
+    } while(option != 6);
 }
 
 void add_value_range(Tree * tree) {
@@ -84,9 +86,10 @@ void save_file(Tree * tree) {
 
 void count_node_tree(Tree * tree) {
     int count = count_node(tree);
-    
+    int memory = allocated_memory(tree, count);
     if(count != 0) {
         printf("Quantidade de nós na árvore: %d", count);
+        printf("\nMemória alocada: %d", memory);
     } else
         printf("Árvore vazia");
 }
