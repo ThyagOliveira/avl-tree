@@ -1,4 +1,5 @@
 App
+*.txt
 
 # Created by https://www.gitignore.io/api/c,linux,macos,windows,codeblocks,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=c,linux,macos,windows,codeblocks,visualstudiocode
